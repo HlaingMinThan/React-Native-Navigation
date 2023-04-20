@@ -2,7 +2,9 @@ import { StyleSheet, Text, View ,Button } from 'react-native';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 function HomeScreen({navigation}) {
   return (
@@ -27,8 +29,10 @@ function HomeScreen({navigation}) {
 }
 
 function DetailsScreen({route}) {
-  let { id , name } = route.params;
-  
+  //Be careful when u use tab navigator, the detail btn on tab don't have any route param -> so we can got error if we click detail route on tab first time
+  //way to prevent is just handling the default state for rotue.params
+  let { id , name } = route.params || {};//handle for null case
+console.log('click hit',id)
   useFocusEffect(
     React.useCallback(() => {
       // Do something when the screen is focused
@@ -48,18 +52,45 @@ function DetailsScreen({route}) {
   );
 }
 
-const Stack = createNativeStackNavigator();
+//native stack usage example
+// const Stack = createNativeStackNavigator();
+// export default function App() {
+  //   return (
+    //     <NavigationContainer>
+    //     <Stack.Navigator>
+    //       <Stack.Screen name="Home" component={HomeScreen} />
+    //       <Stack.Screen name="Details" component={DetailsScreen} />
+    //     </Stack.Navigator>
+    //   </NavigationContainer>
+    //   );
+// }
+
+//Tab navigation usage example
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
-    </Stack.Navigator>
-  </NavigationContainer>
-  );
+    return (
+      <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen}  
+        options={{
+          tabBarIcon:(color,size) => (
+              <Entypo name="home" size={20} color={color} />
+          )
+        }}
+        />
+        <Tab.Screen name="Details" component={DetailsScreen}
+           options={{
+            tabBarIcon:(color,size) => (
+              <MaterialIcons name="details" size={20} color={color} />
+            )
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+      );
 }
+
 
 const styles = StyleSheet.create({
   container: {
