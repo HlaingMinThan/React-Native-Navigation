@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View ,Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 
 
 function HomeScreen({navigation}) {
@@ -8,17 +9,28 @@ function HomeScreen({navigation}) {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Home Screen</Text>
       <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
+        title="Go to Details 1"
+        onPress={() => navigation.navigate('Details' ,{
+          id : 1,
+          name : "Hlaing min than"
+        })}
+      />
+      <Button
+        title="Go to Details 2"
+        onPress={() => navigation.navigate('Details' ,{
+          id : 2,
+          name : "Aung Aung"
+        })}
       />
     </View>
   );
 }
 
-function DetailsScreen() {
+function DetailsScreen({route}) {
+  let { id , name } = route.params;
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
+      <Text>Details Screen for id {id}</Text>
     </View>
   );
 }
