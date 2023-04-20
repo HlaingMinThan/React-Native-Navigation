@@ -5,6 +5,9 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import 'react-native-gesture-handler';
+
 
 function HomeScreen({navigation}) {
   return (
@@ -66,29 +69,43 @@ console.log('click hit',id)
 // }
 
 //Tab navigation usage example
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
+
+// export default function App() {
+//     return (
+//       <NavigationContainer>
+//       <Tab.Navigator>
+//         <Tab.Screen name="Home" component={HomeScreen}  
+//         options={{
+//           tabBarIcon:(color,size) => (
+//               <Entypo name="home" size={20} color={color} />
+//           )
+//         }}
+//         />
+//         <Tab.Screen name="Details" component={DetailsScreen}
+//            options={{
+//             tabBarIcon:(color,size) => (
+//               <MaterialIcons name="details" size={20} color={color} />
+//             )
+//           }}
+//         />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//       );
+// }
+
+//Drawer navigation example
+const Drawer = createDrawerNavigator();
 
 export default function App() {
-    return (
-      <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen}  
-        options={{
-          tabBarIcon:(color,size) => (
-              <Entypo name="home" size={20} color={color} />
-          )
-        }}
-        />
-        <Tab.Screen name="Details" component={DetailsScreen}
-           options={{
-            tabBarIcon:(color,size) => (
-              <MaterialIcons name="details" size={20} color={color} />
-            )
-          }}
-        />
-      </Tab.Navigator>
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Details" component={DetailsScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
-      );
+  );
 }
 
 
