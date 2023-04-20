@@ -28,6 +28,19 @@ function HomeScreen({navigation}) {
 
 function DetailsScreen({route}) {
   let { id , name } = route.params;
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      console.log('detail page focused for id '+id)
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+        console.log('detail page unfocused for id '+id)
+      };
+    }, [])
+  );
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>Details Screen for id {id}</Text>
